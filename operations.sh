@@ -58,6 +58,16 @@ analyze() {
 	echo "Number of occurences is ${count}"
 }
 
+delete() {
+	
+}
+
+arrange() {
+	cd $directory
+	mkdir "$operation_argument" > /dev/null 2>&1
+	mv *.$operation_argument ./$operation_argument
+}
+
 operate() {
 	case $operation_type in 
 		ana) 
