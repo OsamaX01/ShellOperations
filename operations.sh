@@ -14,16 +14,10 @@ get_existing_directory() {
 }
 
 get_operation_type() {
-	while :
+	while [[ "${operation_type}" != "ana" ]] && [[ "${operation_type}" != "del" ]] && [[ "${operation_type}" != "arr" ]]
 	do
-		if [[ "${operation_type}" != "ana" ]] && [[ "${operation_type}" != "del" ]] && [[ "${operation_type}" != "arr" ]]
-		then 
-			read -p "please enter one of the operations \"ana\"(analytics), \"del\"(delete), or \"arr\"(arrange): " operation_type
-		else 
-			break
-		fi
+		read -p "please enter one of the operations \"ana\"(analytics), \"del\"(delete), or \"arr\"(arrange): " operation_type
 	done
-
 }
 
 get_valid_argument() {
@@ -35,7 +29,7 @@ get_valid_argument() {
 			number='^[0-9]+$'
 			while [ -z ${operation_argument} ] || ! [[ $operation_argument =~ $number ]]
 			do
-				read -p "please enter a number represinting biggest file size (only numbers allowed): " operation_argument 
+				read -p "please enter a number represinting biggest file size in Bytes (only numbers allowed): " operation_argument 
 			done
 			;;
 		arr)
@@ -59,7 +53,8 @@ analyze() {
 }
 
 delete() {
-	
+	cd $directory
+	find -type f -size +${operation_argument}c -delete
 }
 
 arrange() {
